@@ -9,8 +9,8 @@
  */
 angular.module('colorApp').controller('MainCtrl', function ($scope) {
     $scope.baseColor = Please.make_color();
-    $scope.colors = getScheme(100);
-    $scope.count = 0;
+    $scope.colors = getScheme(3);
+    $scope.count = $scope.colors.length;
 
     $scope.addCounter = function() {
         $scope.count++;
@@ -33,6 +33,8 @@ function getScheme(nbr){
             scheme.push(item[j]);
         }
     }
+    var colorToSlice = 6 - (nbr%6);
+    scheme.splice(-colorToSlice, colorToSlice);
     return scheme;
 }
 function getSingleScheme(hsbColor){
