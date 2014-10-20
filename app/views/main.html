@@ -1,0 +1,7 @@
+<div>
+  <h1>Génération aléatoire de couleurs</h1>
+  <div class="item" style="background-color:#000;cursor:pointer;" ng-click="addCounter()">{{count}}</div>
+  <div ng-repeat="color in colors track by $index" class="item" style="background-color: {{color}}">
+    <p>{{ color }}</p>
+  </div>
+</div>
