@@ -8,12 +8,12 @@
  * Controller of the colorApp
  */
 angular.module('colorApp').controller('MainCtrl', function ($scope) {
-    $scope.baseColor = Please.make_color();
     $scope.colors = getScheme(3);
     $scope.count = $scope.colors.length;
 
     $scope.addCounter = function() {
         $scope.count++;
+        $scope.colors.push(getSingleColor($scope.colors));
     }
 });
 
@@ -51,4 +51,7 @@ function getSingleScheme(hsbColor){
     });
     scheme.splice(0, 1);
     return scheme;
+}
+function getSingleColor(scheme){
+    return getSingleScheme(scheme.slice(-1)[0])[0];
 }
