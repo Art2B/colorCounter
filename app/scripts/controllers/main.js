@@ -7,15 +7,31 @@
  * # MainCtrl
  * Controller of the colorApp
  */
-angular.module('colorApp').controller('MainCtrl', function ($scope) {
-    $scope.colors = getScheme(3);
-    $scope.count = $scope.colors.length;
+angular.module('colorApp').controller('MainCtrl', ["$scope", "$firebase", 
+    function ($scope, $firebase) {
+        $scope.colors = getScheme(3);
+        $scope.count = $scope.colors.length;
 
-    $scope.addCounter = function() {
-        $scope.count++;
-        $scope.colors.push(getSingleColor($scope.colors));
+        var ref = new Firebase("https://"+fireName+".firebaseio.com/counters");
+        var sync = $firebase(ref);
+        $scope.counters = sync.$asObject();
+
+        $scope.addCounter = function() {
+            var countRef = ref.child("counters");
+            var countId = ref.push();
+            countId.set({
+                id: countId.name(),
+                name: "Golum",
+                value: 0
+            })
+        }
+        $scope.increaseCounter = function(obj){
+            var objRef = ref.child(obj.id);
+            obj.value++;
+            objRef.update(obj);
+        }
     }
-});
+]);
 
 function getScheme(nbr){
     var color = Please.make_color({
