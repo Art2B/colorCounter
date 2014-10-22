@@ -9,21 +9,24 @@
  */
 angular.module('colorApp').controller('MainCtrl', ["$scope", "$firebase", 
     function ($scope, $firebase) {
-        $scope.colors = getScheme(3);
-        $scope.count = $scope.colors.length;
+        $scope.counterLoaded = false;
 
         var ref = new Firebase("https://"+fireName+".firebaseio.com/counters");
         var sync = $firebase(ref);
         $scope.counters = sync.$asObject();
+        $scope.counters.$loaded().then(function(){
+            $scope.counterLoaded = true;
+        })
+        $scope.counterLoaded = false;
 
-        $scope.addCounter = function() {
-            var countRef = ref.child("counters");
-            var countId = ref.push();
-            countId.set({
-                id: countId.name(),
-                name: "Golum",
-                value: 0
-            })
+        $scope.addCounter = function(name) {
+            ref.once('value', function(dataSnapshot) {
+              if (dataSnapshot.numChildren()>0)
+                createOtherCounter(ref, name);
+              else {
+                createCounter(ref, name, Please.make_color({saturation: .7, value: .9}));
+              }
+            });
         }
         $scope.increaseCounter = function(obj){
             var objRef = ref.child(obj.id);
@@ -33,6 +36,26 @@ angular.module('colorApp').controller('MainCtrl', ["$scope", "$firebase",
     }
 ]);
 
+// Firebase custome
+function createCounter(ref, name, color){
+    var countId = ref.push();
+    countId.set({
+        id: countId.name(),
+        name: name,
+        value: 0,
+        color: color
+    });
+}
+function createOtherCounter(ref, name){
+    ref.once('value', function(dataSnapshot) {
+        var lastColor ='';
+        dataSnapshot.forEach(function(childSnapshot) {
+          lastColor = childSnapshot.val().color;
+        });
+        createCounter(ref, name, getSingleColor(lastColor));
+    });
+}
+//Couleurs
 function getScheme(nbr){
     var color = Please.make_color({
         saturation: .7,
@@ -68,6 +91,15 @@ function getSingleScheme(hsbColor){
     scheme.splice(0, 1);
     return scheme;
 }
-function getSingleColor(scheme){
-    return getSingleScheme(scheme.slice(-1)[0])[0];
+function getSingleColor(color){
+    var lastColor = Please.HEX_to_HSV(color);
+    var scheme = Please.make_scheme({
+        h: lastColor.h,
+        s: lastColor.s,
+        v: lastColor.v
+    },{
+        scheme_type: 'analogous',
+        format: 'hex'
+    });
+    return scheme[1];
 }

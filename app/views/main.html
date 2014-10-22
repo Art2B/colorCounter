@@ -1,7 +1,18 @@
-<div>
-  <h1>Génération aléatoire de couleurs</h1>
-  <div class="item" style="background-color:#000;cursor:pointer;" ng-click="addCounter()">{{count}}</div>
-  <div ng-repeat="item in counters track by $index" class="item" style="background-color: crimson" ng-click="increaseCounter(item)">
-    <p>{{item.name}} : {{item.value}}</p>
+<div class="main">
+  <div class="" ng-show="counterLoaded">
+    <div ng-repeat="item in counters track by $index" class="item" style="background-color: {{item.color}}" ng-click="increaseCounter(item)">
+      <p>{{item.name}} : {{item.value}}</p>
+    </div>
+    <div class="item">
+      <form novalidate class="simple-form">
+        <input type="text" ng-model="name">
+        <button ng-click="addCounter(name)">Add new</button>
+      </form>
+    </div>
+  </div>
+  <div class="loader" ng-hide="counterLoaded">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
   </div>
 </div>
+
