@@ -1,16 +1,18 @@
 <main class="main">
   <div class="ng-scope flex-container" ng-show="counterLoaded">
-    <div ng-repeat="item in counters track by $index" class="flex-item" style="background-color: {{item.color}}" ng-click="increaseCounter(item)">
-      <p>{{item.name}} : {{item.value}}</p>
+    <div ng-repeat="item in counters track by $index" class="flex-item" style="background-color: {{item.color}}">
+      <p class="value">{{item.value}}</p>
+      <p class="name">{{item.name}}</p>
+      <span class="more" ng-click="increaseCounter(item)">+</span>
     </div>
-    <div class="flex-item">
+    <div class="flex-item" style="background-color: {{lastColor}}">
       <form novalidate class="simple-form">
-        <input type="text" ng-model="name"><br>
-        <button ng-click="addCounter(name)">Add new</button>
+        <input type="text" ng-model="name" placeholder="New" id="add-input"><br>
+        <span class="more" ng-click="addCounter(name)">+</span>
       </form>
     </div>
   </div>
-  <div class="loader" ng-hide="counterLoaded">
+  <div class="loader" id="loader" ng-hide="counterLoaded">
     <div class="double-bounce1"></div>
     <div class="double-bounce2"></div>
   </div>  
