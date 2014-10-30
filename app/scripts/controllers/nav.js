@@ -17,6 +17,7 @@ angular.module('colorApp').controller('NavCtrl', ['$rootScope', '$scope', '$fire
             angular.forEach($rootScope.counters, function(value, key) {
                 var valueRef = ref.child(key);
                 value.color = getSingleColor(newBaseColor);
+                $rootScope.lastColor = getSingleColor(value.color);
                 newBaseColor = value.color;
                 valueRef.update(value);
             });
