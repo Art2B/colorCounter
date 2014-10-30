@@ -14,17 +14,23 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/loader.css">
     <link rel="stylesheet" href="styles/flexbox.css">
+    <link rel="stylesheet" href="styles/menu.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="colorApp">
+  <body ng-app="colorApp" ng-class="{'show-nav': showMenu}">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ng-view=""></div>
+    <div class="site-wrap">
+        <nav ng-include='"views/templates/nav.html"' ng-controller="NavCtrl"></nav>
+        <div class="push-wrap" ng-view=""></div>
+    </div>
+
+    
     <footer>
-      <p>Proudly powered by <a href="https://twitter.com/abattut" target="_blank">Arthur</a></p>
+      <p>Proudly powered by <a href="https://twitter.com/abattut" target="_blank">Arthur</a> <span ng-init="showMenu = false" ng-click="showMenu = !showMenu">Click</span></p>
     </footer>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -66,6 +72,7 @@
         <script src="scripts/config.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/nav.js"></script>
         <!-- endbuild -->
 </body>
 </html>

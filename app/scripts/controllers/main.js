@@ -7,17 +7,17 @@
  * # MainCtrl
  * Controller of the colorApp
  */
-angular.module('colorApp').controller('MainCtrl', ['$scope', '$firebase', 
-    function ($scope, $firebase) {
+angular.module('colorApp').controller('MainCtrl', ['$rootScope','$scope', '$firebase', 
+    function ($rootScope, $scope, $firebase) {
         $scope.counterLoaded = false;
 
         var ref = new Firebase('https://'+fireName+'.firebaseio.com/counters');
         var sync = $firebase(ref);
         $scope.lastColor = '';
-        $scope.counters = sync.$asObject();
-        $scope.counters.$loaded().then(function(){
+        $rootScope.counters = sync.$asObject();
+        $rootScope.counters.$loaded().then(function(){
             $scope.counterLoaded = true;
-            angular.forEach($scope.counters, function(value, key) {
+            angular.forEach($rootScope.counters, function(value, key) {
                 $scope.lastColor = getSingleColor(value.color);
             });
         });
