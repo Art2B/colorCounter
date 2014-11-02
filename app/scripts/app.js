@@ -18,6 +18,13 @@ angular
     'ngTouch',
     'firebase',
   ])
+  .controller('AppCtrl', ['$rootScope', '$scope', 
+    function($rootScope, $scope){
+      $scope.$on('$routeChangeStart', function(next, current) { 
+        console.log("salut");
+      });
+    }
+  ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -27,6 +34,10 @@ angular
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .when('/contact', {
+        templateUrl: 'views/contact.html',
+        controller: 'ContactCtrl'
       })
       .otherwise({
         redirectTo: '/'
