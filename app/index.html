@@ -23,14 +23,20 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="site-wrap">
-        <nav ng-include='"views/templates/nav.html"' ng-controller="NavCtrl"></nav>
-        <div class="push-wrap" ng-view=""></div>
+    <div class="site-wrap" ng-show="counterLoaded">
+            <nav ng-include='"views/templates/nav.html"' ng-controller="NavCtrl"></nav>
+            <div class="push-wrap">
+                <span ng-init="showMenu = false" ng-click="showMenu = !showMenu" class="click-menu"></span>
+                <div ng-view=""></div>
+            </div>
     </div>
-
+    <div class="loader" id="loader" ng-hide="counterLoaded">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+    </div>
     
     <footer>
-      <p>Proudly powered by <a href="https://twitter.com/abattut" target="_blank">Arthur</a> <span ng-init="showMenu = false" ng-click="showMenu = !showMenu">Click</span></p>
+      <p>Proudly powered by <a href="https://twitter.com/abattut" target="_blank">Arthur</a></p>
     </footer>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -64,15 +70,15 @@
     <!-- endbuild -->
     <script src="https://cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="scripts/vendors/please.js"></script>
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/custom.js"></script>
-        <script src="scripts/config.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/nav.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/custom.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/nav.js"></script>
+    <!-- endbuild -->
 </body>
 </html>

@@ -9,19 +9,18 @@
  */
 angular.module('colorApp').controller('MainCtrl', ['$rootScope','$scope', '$firebase', 
     function ($rootScope, $scope, $firebase) {
-        $scope.counterLoaded = false;
+        $rootScope.counterLoaded = false;
 
         var ref = new Firebase('https://'+fireName+'.firebaseio.com/counters');
         var sync = $firebase(ref);
         $rootScope.lastColor = '';
         $rootScope.counters = sync.$asObject();
         $rootScope.counters.$loaded().then(function(){
-            $scope.counterLoaded = true;
+            $rootScope.counterLoaded = true;
             angular.forEach($rootScope.counters, function(value, key) {
                 $rootScope.lastColor = getSingleColor(value.color);
             });
         });
-        $scope.counterLoaded = false;
 
         $scope.addCounter = function(name) {
             ref.once('value', function(dataSnapshot) {
@@ -42,4 +41,4 @@ angular.module('colorApp').controller('MainCtrl', ['$rootScope','$scope', '$fire
             objRef.update(obj);
         }
     }
-]); 
+]);

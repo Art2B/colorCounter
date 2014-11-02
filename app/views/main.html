@@ -1,5 +1,5 @@
 <main class="main">
-  <div class="ng-scope flex-container" ng-show="counterLoaded">
+  <div class="ng-scope flex-container">
     <div ng-repeat="item in counters track by $index" class="flex-item" style="background-color: {{item.color}}">
       <p class="value">{{item.value}}</p>
       <p class="name">{{item.name}}</p>
@@ -12,8 +12,4 @@
       </form>
     </div>
   </div>
-  <div class="loader" id="loader" ng-hide="counterLoaded">
-    <div class="double-bounce1"></div>
-    <div class="double-bounce2"></div>
-  </div>  
 </main>
