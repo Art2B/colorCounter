@@ -10,6 +10,7 @@
 angular.module('colorApp').controller('NavCtrl', ['$rootScope', '$scope', '$firebase',
     function ($rootScope, $scope, $firebase) {
         var ref = new Firebase('https://'+fireName+'.firebaseio.com/counters');
+        $rootScope.menuShowed = false;
 
         $scope.changeColor = function(){
             console.log("Change the colors :)");
@@ -21,6 +22,9 @@ angular.module('colorApp').controller('NavCtrl', ['$rootScope', '$scope', '$fire
                 newBaseColor = value.color;
                 valueRef.update(value);
             });
+        }
+        $scope.showMenu = function(){
+            $rootScope.menuShowed = !$rootScope.menuShowed;
         }
     }
 ]);

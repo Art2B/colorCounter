@@ -17,14 +17,14 @@
     <link rel="stylesheet" href="styles/menu.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="colorApp" class="cbp-spmenu-push" ng-class="{'cbp-spmenu-push-toright': showMenu}">
+  <body ng-app="colorApp" class="cbp-spmenu-push" ng-class="{'cbp-spmenu-push-toright': menuShowed}">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
     <div ng-show="counterLoaded" class="full-height">
-        <nav ng-include='"views/templates/nav.html"' ng-controller="NavCtrl" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" ng-class="{'cbp-spmenu-open': showMenu}"></nav>
+        <nav ng-include='"views/templates/nav.html"' ng-controller="NavCtrl" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" ng-class="{'cbp-spmenu-open': menuShowed}"></nav>
         <div class="content-container full-height">
             <div ng-view=""></div>
         </div>
