@@ -18,13 +18,6 @@ angular
     'ngTouch',
     'firebase',
   ])
-  .controller('AppCtrl', ['$rootScope', '$scope', 
-    function($rootScope, $scope){
-      $scope.$on('$routeChangeStart', function(next, current) { 
-        console.log("salut");
-      });
-    }
-  ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
