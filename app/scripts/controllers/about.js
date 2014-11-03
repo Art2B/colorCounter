@@ -7,11 +7,8 @@
  * # AboutCtrl
  * Controller of the colorApp
  */
-angular.module('colorApp')
-  .controller('AboutCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+angular.module('colorApp').controller('AboutCtrl', ['$rootScope', '$scope',
+    function ($rootScope, $scope) {
+        $rootScope.counterLoaded = true;
+    }
+]);
