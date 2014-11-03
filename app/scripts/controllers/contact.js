@@ -13,13 +13,8 @@ angular.module('colorApp').controller('ContactCtrl', ['$rootScope','$scope', '$f
 
         var ref = new Firebase('https://'+fireName+'.firebaseio.com/messages');
         $scope.sendMessage = function(message){
-            var item = {
-                'date': new Date(),
-                'from': message.sender,
-                'mail': message.mail,
-                'message': message.message
-            }
-            ref.push(item);
+            message.date = String(new Date());
+            ref.push(message);
             $scope.message = {};
         }
     }
