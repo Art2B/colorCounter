@@ -1,9 +1,9 @@
 <main class="contact">
     <p>Any suggestion, request, love declaration ? Leave me a word :)</p>
-    <form action="">
-        <input type="text" placeholder="name">
-        <input type="mail" placeholder="mail">
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-        <input type="submit" value="Send">
+    <form novalidate>
+        <input type="text" placeholder="name" ng-model="message.sender" required>
+        <input type="mail" placeholder="mail" ng-model="message.mail" required>
+        <textarea ng-model="message.message" required></textarea>
+        <input type="submit" value="Send" ng-click="sendMessage(message)">
     </form>
 </main>
