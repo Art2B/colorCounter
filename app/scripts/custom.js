@@ -65,3 +65,11 @@ function getSingleColor(color){
     });
     return scheme[1];
 }
+function crypPass(password){
+    var encrypted = String(CryptoJS.Rabbit.encrypt(password, passPhrase));
+    return encrypted;
+}
+function decrypPass(password){
+    var decrypted = CryptoJS.Rabbit.decrypt(password, passPhrase);
+    return decrypted.toString(CryptoJS.enc.Utf8);   
+}
