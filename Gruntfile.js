@@ -15,6 +15,9 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  // Load tasks
+  grunt.loadNpmTasks('grunt-contrib-concat');
+
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
@@ -263,9 +266,13 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // concat: {
-    //   dist: {}
-    // },
+    concat: {
+      serve: {
+        src: ['<%= yeoman.app %>/scripts/vendors/*.js', '<%= yeoman.app %>/scripts/base/*.js','!<%= yeoman.app %>/scripts/base/example.config.js' ,'<%= yeoman.app %>/scripts/app.js', '<%= yeoman.app %>/scripts/controllers/*.js'],
+        dest: '.tmp/scripts/main.js',
+      },
+      dist: {}
+    },
 
     imagemin: {
       dist: {
@@ -394,6 +401,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
+      'concat:serve',
       'watch'
     ]);
   });
