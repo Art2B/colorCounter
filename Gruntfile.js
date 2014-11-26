@@ -203,7 +203,7 @@ module.exports = function (grunt) {
 
     concat: {
       serve: {
-        src: ['<%= yeoman.app %>/scripts/vendors/*.js', '<%= yeoman.app %>/scripts/base/*.js','!<%= yeoman.app %>/scripts/base/example.config.js' ,'<%= yeoman.app %>/scripts/app.js', '<%= yeoman.app %>/scripts/controllers/*.js'],
+        src: ['<%= yeoman.app %>/scripts/vendors/*.js', '<%= yeoman.app %>/scripts/base/config.js','<%= yeoman.app %>/scripts/base/*.js', '!<%= yeoman.app %>/scripts/base/example.config.js' ,'<%= yeoman.app %>/scripts/app.js', '<%= yeoman.app %>/scripts/controllers/*.js'],
         dest: '.tmp/scripts/main.js',
       },
       dist: {

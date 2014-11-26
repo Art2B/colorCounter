@@ -20,7 +20,8 @@ At this point you'll have the base of the app. But before running it, you need t
 
 ```javascript
 var fireName = 'Firebase database name'; // Example: gh5b979cx6t for https://gh5b979cx6t.firebaseio-demo.com/
-var passPhrase = "Passphrase"; // The passphrase to encrypt the password
+var passPhrase = 'Passphrase'; // The passphrase to encrypt the password
+var siteId = 'UA-XXXXX-XX' // Your google site id
 ```
 Once you have set this up, run `grunt serve`, then got to localhost and enjoy counting stuff
 
