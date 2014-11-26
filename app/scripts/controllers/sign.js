@@ -1,3 +1,4 @@
+/*globals Firebase, fireName, crypPass */
 'use strict';
 
 /**
@@ -7,8 +8,8 @@
  * # SignCtrl
  * Controller of the colorApp
  */
-angular.module('colorApp').controller('SignCtrl', ['$rootScope','$scope', '$firebase',
-    function ($rootScope, $scope, $firebase) {
+angular.module('colorApp').controller('SignCtrl', ['$rootScope','$scope',
+    function ($rootScope, $scope) {
         $rootScope.counterLoaded = true;
 
         var ref = new Firebase('https://'+fireName+'.firebaseio.com/users');
@@ -16,7 +17,7 @@ angular.module('colorApp').controller('SignCtrl', ['$rootScope','$scope', '$fire
             pseudo: false,
             mail: false,
             password: false
-        }
+        };
         $scope.state = {};
 
         $scope.signUp = function(user){
@@ -26,14 +27,14 @@ angular.module('colorApp').controller('SignCtrl', ['$rootScope','$scope', '$fire
             };
             newUser.inscription= String(new Date());
             newUser.password = crypPass(user.password);
-            newUser.role = "member";
+            newUser.role = 'member';
             ref.push(newUser);
             $scope.user = {};
             $scope.state = {};
 
         };
         $scope.checkPseudo = function(pseudo){
-            if(pseudo != undefined){
+            if(pseudo !== undefined){
                 $scope.dataState.pseudo = true;
                 $scope.state.pseudo = 'Super pseudo';
             } else {
@@ -50,7 +51,7 @@ angular.module('colorApp').controller('SignCtrl', ['$rootScope','$scope', '$fire
                 ref.once('value', function(data) {
                     data.forEach(function(child) {
                       var item = child.val();
-                        if(mail == item.mail){
+                        if(mail === item.mail){
                             isValid = false;
                         }
                     });
@@ -62,13 +63,13 @@ angular.module('colorApp').controller('SignCtrl', ['$rootScope','$scope', '$fire
                     } else {
                         $scope.$apply(function(){ //let angular know the changes
                             $scope.dataState.mail = false;
-                            $scope.state.mail = "Un compte existe déjà pour cette adresse";
+                            $scope.state.mail = 'Un compte existe déjà pour cette adresse';
                         });
                     }
                 });
             } else if(regWithAt.test(mail)){
                 $scope.state.mail = 'Wow, much better';
-            } else if(mail != undefined) {
+            } else if(mail !== undefined) {
                 $scope.state.mail = 'Looks nice. Go on !';
             } else {
                 $scope.state.mail = '';
@@ -77,9 +78,9 @@ angular.module('colorApp').controller('SignCtrl', ['$rootScope','$scope', '$fire
         $scope.checkPassword = function(user){
             if(user.password === user.passwordVerif){
                 $scope.dataState.password = true;
-                $scope.state.password = "The password match";
+                $scope.state.password = 'The password match';
             } else {
-                $scope.state.password = "The password doesn't match";
+                $scope.state.password = 'The password doesn\'t match';
             }
         };
     }

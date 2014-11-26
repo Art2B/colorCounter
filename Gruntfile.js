@@ -38,14 +38,10 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all'],
+        tasks: ['concat:serve'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
-      },
-      jsTest: {
-        files: ['test/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'karma']
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -122,7 +118,8 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
+          '<%= yeoman.app %>/scripts/{,*/}*.js',
+          '!<%= yeoman.app %>/scripts/vendors/*.js'
         ]
       },
       test: {
@@ -204,74 +201,15 @@ module.exports = function (grunt) {
       }
     },
 
-    // Renames files for browser caching purposes
-    filerev: {
-      dist: {
-        src: [
-          '<%= yeoman.dist %>/scripts/{,*/}*.js',
-          '<%= yeoman.dist %>/styles/{,*/}*.css',
-          '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.dist %>/styles/fonts/*'
-        ]
-      }
-    },
-
-    // Reads HTML for usemin blocks to enable smart builds that automatically
-    // concat, minify and revision files. Creates configurations in memory so
-    // additional tasks can operate on them
-    useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
-      options: {
-        dest: '<%= yeoman.dist %>',
-        flow: {
-          html: {
-            steps: {
-              js: ['concat', 'uglifyjs'],
-              css: ['cssmin']
-            },
-            post: {}
-          }
-        }
-      }
-    },
-
-    // Performs rewrites based on filerev and the useminPrepare configuration
-    usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
-      options: {
-        assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
-      }
-    },
-
-    // The following *-min tasks will produce minified files in the dist folder
-    // By default, your `index.html`'s <!-- Usemin block --> will take care of
-    // minification. These next options are pre-configured if you do not wish
-    // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
     concat: {
       serve: {
         src: ['<%= yeoman.app %>/scripts/vendors/*.js', '<%= yeoman.app %>/scripts/base/*.js','!<%= yeoman.app %>/scripts/base/example.config.js' ,'<%= yeoman.app %>/scripts/app.js', '<%= yeoman.app %>/scripts/controllers/*.js'],
         dest: '.tmp/scripts/main.js',
       },
-      dist: {}
+      dist: {
+        src: ['<%= yeoman.app %>/scripts/vendors/*.js', '<%= yeoman.app %>/scripts/base/*.js','!<%= yeoman.app %>/scripts/base/example.config.js' ,'<%= yeoman.app %>/scripts/app.js', '<%= yeoman.app %>/scripts/controllers/*.js'],
+        dest: '<%= yeoman.dist %>/scripts/main.js',
+      }
     },
 
     imagemin: {
@@ -355,6 +293,16 @@ module.exports = function (grunt) {
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
           src: ['generated/*']
+        }, {
+          expand: true,
+          cwd: '.tmp/styles',
+          dest: '<%= yeoman.dist %>/styles',
+          src: ['*.css']
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>/styles',
+          dest: '<%= yeoman.dist %>/styles',
+          src: ['*.css']
         }]
       },
       styles: {
@@ -379,14 +327,6 @@ module.exports = function (grunt) {
         'svgmin'
       ]
     },
-
-    // Test settings
-    karma: {
-      unit: {
-        configFile: 'test/karma.conf.js',
-        singleRun: true
-      }
-    }
   });
 
 
@@ -406,34 +346,23 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
-  });
-
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
   ]);
 
   grunt.registerTask('build', [
-    'clean:dist',
-    'wiredep',
-    'useminPrepare',
+    'clean:dist', // Delete actual dist folder
+    'wiredep', // Inject bower components into the app
     'concurrent:dist',
     'autoprefixer',
-    'concat',
+    'concat:dist',
     'ngAnnotate',
     'copy:dist',
     'cdnify',
-    'cssmin',
-    'uglify',
-    'filerev',
-    'usemin',
-    'htmlmin'
+    'htmlmin' // Minimify HTML
   ]);
 
   grunt.registerTask('default', [
