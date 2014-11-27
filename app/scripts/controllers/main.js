@@ -1,4 +1,5 @@
 'use strict';
+/*globals Firebase, fireName, getSingleColor, createOtherCounter, createCounter, Please */
 
 /**
  * @ngdoc function
@@ -17,7 +18,7 @@ angular.module('colorApp').controller('MainCtrl', ['$rootScope','$scope', '$fire
         $rootScope.counters = sync.$asObject();
         $rootScope.counters.$loaded().then(function(){
             $rootScope.counterLoaded = true;
-            angular.forEach($rootScope.counters, function(value, key) {
+            angular.forEach($rootScope.counters, function(value) {
                 $rootScope.lastColor = getSingleColor(value.color);
             });
         });
@@ -28,17 +29,17 @@ angular.module('colorApp').controller('MainCtrl', ['$rootScope','$scope', '$fire
                 createOtherCounter(ref, name);
               }
               else {
-                createCounter(ref, name, Please.make_color({saturation: 0.7, value: 0.9}));
+                createCounter(ref, name, Please.make_color({saturation: 0.7, value: 0.9})); // jshint ignore:line
               }
             });
             $rootScope.lastColor = getSingleColor($rootScope.lastColor);
             $scope.name = '';
-        }
+        };
         
         $scope.increaseCounter = function(obj){
             var objRef = ref.child(obj.id);
             obj.value++;
             objRef.update(obj);
-        }
+        };
     }
 ]);

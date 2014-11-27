@@ -10,5 +10,6 @@
 angular.module('colorApp').controller('AboutCtrl', ['$rootScope', '$scope',
     function ($rootScope, $scope) {
         $rootScope.counterLoaded = true;
+        $scope.message = 'About controller';
     }
 ]);

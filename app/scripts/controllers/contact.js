@@ -1,5 +1,5 @@
 'use strict';
-
+/*globals Firebase, fireName */
 /**
  * @ngdoc function
  * @name colorApp.controller:ContactCtrl
@@ -7,8 +7,8 @@
  * # ContactCtrl
  * Controller of the colorApp
  */
-angular.module('colorApp').controller('ContactCtrl', ['$rootScope','$scope', '$firebase',
-    function ($rootScope, $scope, $firebase) {
+angular.module('colorApp').controller('ContactCtrl', ['$rootScope','$scope',
+    function ($rootScope, $scope) {
         $rootScope.counterLoaded = true;
 
         var ref = new Firebase('https://'+fireName+'.firebaseio.com/messages');
@@ -16,6 +16,6 @@ angular.module('colorApp').controller('ContactCtrl', ['$rootScope','$scope', '$f
             message.date = String(new Date());
             ref.push(message);
             $scope.message = {};
-        }
+        };
     }
 ]);

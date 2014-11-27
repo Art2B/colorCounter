@@ -1,4 +1,4 @@
-// Firebase custome
+// Firebase custom
 function createCounter(ref, name, color){
     var countId = ref.push();
     countId.set({
